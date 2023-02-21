@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterSecondPage"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/success2button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="goToLogin"
+            android:text="@string/registerButtonText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/thalspinner" />
+
+        <Spinner
+            android:id="@+id/thalspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/spinner_bg"
+            android:entries="@array/thalspinnervalues"
+            app:layout_constraintBottom_toTopOf="@+id/success2button"
+            app:layout_constraintStart_toStartOf="@+id/thal"
+            app:layout_constraintTop_toBottomOf="@+id/fbsspinner" />
+
+        <TextView
+            android:id="@+id/slopetext"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="53dp"
+            android:layout_marginEnd="53dp"
+            android:text="@string/slopeString"
+            app:layout_constraintBottom_toTopOf="@+id/slopespinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/restecgspinner" />
+
+        <Spinner
+            android:id="@+id/exangspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="53dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/spinner_bg"
+            android:entries="@array/exangspinnervalues"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/exang" />
+
+        <EditText
+            android:id="@+id/choledittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="chol"
+            android:inputType="number"
+            android:background="@drawable/edittext_bg"
+            app:layout_constraintBottom_toTopOf="@+id/oldpeakedittext"
+            app:layout_constraintStart_toStartOf="@+id/trestbpsedittext"
+            app:layout_constraintTop_toBottomOf="@+id/trestbpsedittext" />
+
+        <Spinner
+            android:id="@+id/slopespinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginBottom="108dp"
+            android:background="@drawable/spinner_bg"
+            android:entries="@array/slopespinnervalues"
+            app:layout_constraintBottom_toTopOf="@+id/fbsspinner"
+            app:layout_constraintStart_toStartOf="@+id/slopetext"
+            app:layout_constraintTop_toBottomOf="@+id/slopetext" />
+
+        <EditText
+            android:id="@+id/trestbpsedittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="trestbps"
+            android:inputType="number"
+            android:background="@drawable/edittext_bg"
+            app:layout_constraintBottom_toTopOf="@+id/choledittext"
+            app:layout_constraintStart_toStartOf="@+id/emergencycontactedittext"
+            app:layout_constraintTop_toBottomOf="@+id/emergencycontactedittext" />
+
+        <TextView
+            android:id="@+id/sextext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/sexString"
+            app:layout_constraintStart_toStartOf="@+id/oldpeakedittext"
+            app:layout_constraintTop_toBottomOf="@+id/oldpeakedittext" />
+
+        <Spinner
+            android:id="@+id/restecgspinner"
+            android:layout_width="211dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="19dp"
+            android:background="@drawable/spinner_bg"
+            android:entries="@array/restecgspinnervalues"
+            app:layout_constraintBottom_toTopOf="@+id/slopetext"
+            app:layout_constraintStart_toStartOf="@+id/restecgtext"
+            app:layout_constraintTop_toBottomOf="@+id/cpspinner" />
+
+        <TextView
+            android:id="@+id/cptext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="43dp"
+            android:text="@string/cpString"
+            app:layout_constraintBottom_toBottomOf="@+id/cpspinner"
+            app:layout_constraintStart_toStartOf="@+id/sexspinner" />
+
+        <TextView
+            android:id="@+id/ca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="ca"
+            app:layout_constraintStart_toStartOf="@+id/caspinner"
+            app:layout_constraintTop_toBottomOf="@+id/fbsspinner" />
+
+        <TextView
+            android:id="@+id/fbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="16dp"
+            android:text="fbs"
+            app:layout_constraintStart_toStartOf="@+id/fbsspinner"
+            app:layout_constraintTop_toBottomOf="@+id/exangspinner" />
+
+        <TextView
+            android:id="@+id/thal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginBottom="1dp"
+            android:text="thal"
+            app:layout_constraintBottom_toTopOf="@+id/thalspinner"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/ageedittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="Age"
+            android:background="@drawable/edittext_bg"
+            android:inputType="number"
+            app:layout_constraintBottom_toTopOf="@+id/emergencycontactedittext"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/emergencycontactedittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="Emergency contact"
+            android:background="@drawable/edittext_bg"
+            android:inputType="phone"
+            app:layout_constraintBottom_toTopOf="@+id/trestbpsedittext"
+            app:layout_constraintStart_toStartOf="@+id/ageedittext"
+            app:layout_constraintTop_toBottomOf="@+id/ageedittext" />
+
+        <Spinner
+            android:id="@+id/caspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/spinner_bg"
+            android:entries="@array/caspinnervalues"
+            app:layout_constraintEnd_toEndOf="@+id/thal"
+            app:layout_constraintStart_toEndOf="@+id/thal"
+            app:layout_constraintTop_toBottomOf="@+id/ca" />
+
+        <Spinner
+            android:id="@+id/sexspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/spinner_bg"
+            android:entries="@array/sexspinnervalues"
+            app:layout_constraintStart_toStartOf="@+id/sextext"
+            app:layout_constraintTop_toTopOf="@+id/sextext" />
+
+        <Spinner
+            android:id="@+id/cpspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/spinner_bg"
+            android:entries="@array/cpspinnervalues"
+            app:layout_constraintBottom_toTopOf="@+id/restecgspinner"
+            app:layout_constraintStart_toStartOf="@+id/cptext"
+            app:layout_constraintTop_toBottomOf="@+id/oldpeakedittext" />
+
+        <Spinner
+            android:id="@+id/fbsspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="114dp"
+            android:background="@drawable/spinner_bg"
+            android:entries="@array/fbsspinnervalues"
+            app:layout_constraintBottom_toTopOf="@+id/thalspinner"
+            app:layout_constraintEnd_toEndOf="@+id/exangspinner"
+            app:layout_constraintStart_toEndOf="@+id/exangspinner"
+            app:layout_constraintTop_toBottomOf="@+id/slopespinner" />
+
+        <TextView
+            android:id="@+id/exang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="16dp"
+            android:text="exang"
+            app:layout_constraintStart_toStartOf="@+id/exangspinner"
+            app:layout_constraintTop_toBottomOf="@+id/slopespinner" />
+
+        <TextView
+            android:id="@+id/restecgtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/restecgString"
+            app:layout_constraintStart_toStartOf="@+id/cpspinner"
+            app:layout_constraintTop_toBottomOf="@+id/cpspinner" />
+
+        <EditText
+            android:id="@+id/oldpeakedittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="116dp"
+            android:ems="10"
+            android:hint="oldpeak"
+            android:inputType="numberDecimal"
+            android:background="@drawable/edittext_bg"
+            app:layout_constraintBottom_toTopOf="@+id/cpspinner"
+            app:layout_constraintStart_toStartOf="@+id/choledittext"
+            app:layout_constraintTop_toBottomOf="@+id/choledittext" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

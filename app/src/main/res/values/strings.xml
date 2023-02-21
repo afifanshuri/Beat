@@ -1,0 +1,103 @@
+<resources>
+    <!-- main page & login strings -->
+    <string name="app_name">Beat</string>
+    <string name="loginButtonText">Login</string>
+    <string name="registerButtonText">Register</string>
+    <string name="nextButtonText">Next</string>
+    <string name="loginUsernameText">Username</string>
+    <string name="loginPasswordText">Password</string>
+    <string name="loginUsernameHint">Enter username here</string>
+    <string name="loginPasswordHint">Enter password here</string>
+
+    <!-- register page strings -->
+    <string name="fullnameString">Full Name</string>
+    <string name="usernameString">Username</string>
+    <string name="passwordString">Password</string>
+    <string name="phoneString">Phone Number</string>
+    <string name="fullnameHint">Enter full name here</string>
+    <string name="usernameHint">Enter new username here</string>
+    <string name="passwordHint">Enter new password here</string>
+    <string name="phoneHint">Enter phone number here</string>
+
+    <!-- register second page strings-->
+    <string name="ageString">Age</string>
+    <string name="sexString">Sex</string>
+    <string name="cpString">Chest Pain Type</string>
+    <string name="trestbpsString">Resting blood pressure</string>
+    <string name="cholString">Cholestrol measurement</string>
+    <string name="fbsString">Fasting bloog sugar (mg/dl)</string>
+    <string name="restecgString">Resting ECG</string>
+    <string name="thalachString">Max Heart Rate</string>
+    <string name="exangString">Exercise induced angina</string>
+    <string name="oldpeakString">ST depression induced by exercise </string>
+    <string name="slopeString">slope of the peak exercise ST segment</string>
+    <string name="caString"> number of major vessels </string>
+    <string name="thalString">Thalassemia</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_tab">Profile</string>
+    <string name="heart_tab">Heart</string>
+
+    <!-- bluetooth devices -->
+    <string name="discoverableBtnBTText">DEVICE DISCOVERABILITY</string>
+    <string name="pairBtnBTText">ON PAIRING</string>
+    <string name="pairedDevicesString">Paired Devices</string>
+    <string name="retrievedDevicesString">Retrieved Devices</string>
+
+    <!-- spinner for sex-->
+    <string-array name="sexspinnervalues">
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+
+    <!-- spinner for cp-->
+    <string-array name="cpspinnervalues">
+        <item>Typical angina</item>
+        <item>Atypical Angina</item>
+        <item>Non-anginal pain</item>
+        <item>Asymptomatic</item>
+    </string-array>
+
+    <!--spinner for exang-->
+    <string-array name="exangspinnervalues">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
+
+    <!--spinner for exang-->
+    <string-array name="fbsspinnervalues">
+        <item>Below 120mg</item>
+        <item>Over 120mg</item>
+    </string-array>
+
+    <!-- spinner for slope-->
+    <string-array name="slopespinnervalues">
+        <item>Upsloping</item>
+        <item>Flat</item>
+        <item>Downsloping</item>
+    </string-array>
+
+    <!-- spinner for ca-->
+    <string-array name="caspinnervalues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <!--spinner for thal-->
+    <string-array name="thalspinnervalues">
+        <item>Normal blood flow</item>
+        <item>Fixed Defect</item>
+        <item>Reversible Defect</item>
+    </string-array>
+
+    <!-- spinner for restecg-->
+    <string-array name="restecgspinnervalues">
+        <item>Normal</item>
+        <item>ST-T wave abnormality</item>
+        <item>left ventricular hypertrophy</item>
+    </string-array>
+
+</resources>

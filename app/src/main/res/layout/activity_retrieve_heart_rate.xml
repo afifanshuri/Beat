@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RetrieveHeartRate"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/beatbackground">
+
+    <ImageView
+        android:id="@+id/heartrateimg"
+        android:layout_width="216dp"
+        android:layout_height="181dp"
+        android:src="@drawable/heartrate_img" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="240dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/heartresult2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Heart Rate"
+            android:textColor="@color/white"
+            android:textSize="40dp" />
+
+        <TextView
+            android:id="@+id/heartresult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/heartresult2"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Current User Risk"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

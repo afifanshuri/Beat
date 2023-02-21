@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterPage">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/beatlogo_blue"
+            app:layout_constraintBottom_toTopOf="@+id/fullname_editext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:id="@+id/username_editext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="@string/usernameHint"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/password_editext"
+            app:layout_constraintStart_toStartOf="@+id/fullname_editext"
+            app:layout_constraintTop_toBottomOf="@+id/fullname_editext" />
+
+
+        <EditText
+            android:id="@+id/fullname_editext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="@string/fullnameHint"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/username_editext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <EditText
+            android:id="@+id/password_editext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="@string/passwordHint"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toTopOf="@+id/phone_editext"
+            app:layout_constraintStart_toStartOf="@+id/username_editext"
+            app:layout_constraintTop_toBottomOf="@+id/username_editext" />
+
+        <EditText
+            android:id="@+id/phone_editext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="@string/phoneHint"
+            android:inputType="phone"
+            app:layout_constraintBottom_toTopOf="@+id/button5"
+            app:layout_constraintStart_toStartOf="@+id/password_editext"
+            app:layout_constraintTop_toBottomOf="@+id/password_editext" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="74dp"
+            android:background="@drawable/button_bg"
+            android:onClick="successRegister"
+            android:text="@string/nextButtonText"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phone_editext" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    tools:context="com.example.beat.RetrieveDevicesApp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_main"/>
+
+        <ImageView
+            android:layout_width="201dp"
+            android:layout_height="172dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/bluetooth_img"></ImageView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".RetrieveDevicesApp"
+            android:gravity="center">
+
+            <Switch
+                android:id="@+id/BTStateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="ON BLUETOOTH"
+                android:switchPadding="150dp"/>
+
+            <Switch
+                android:id="@+id/pairBtnBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/BTStateBtn"
+                android:text="@string/pairBtnBTText"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:switchPadding="170dp"/>
+
+            <Switch
+                android:id="@+id/discBtnBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pairBtnBT"
+                android:text="@string/discoverableBtnBTText"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:switchPadding="100dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingTop="5dp"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/pairedDevicesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pairedDevicesString" />
+
+            <ListView
+                android:id="@+id/pairedDevicesList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/pairedDevicesText"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/listview_bg" />
+
+            <TextView
+                android:id="@+id/retrievedDevicesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pairedDevicesList"
+                android:text="@string/retrievedDevicesString" />
+
+            <ListView
+                android:id="@+id/retrievedDevicesList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/retrievedDevicesText"
+                android:background="@drawable/listview_bg" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

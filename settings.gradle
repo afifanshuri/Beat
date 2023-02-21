@@ -1,0 +1,3 @@
+include ':beatwear'
+include ':app'
+rootProject.name = "Beat"
