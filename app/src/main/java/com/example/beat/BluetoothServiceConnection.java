@@ -217,19 +217,18 @@ public class BluetoothServiceConnection {
         private final OutputStream mmOutStream;
 
         public ConnectedThread(BluetoothSocket socket) {
+            // Initialize the input and output streams
             Log.d(TAG, "ConnectedThread: Starting.");
-
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
 
-            //dismiss the progressdialog when connection is established
-            try{
+            // Dismiss the progress dialog when connection is established
+            try {
                 mProgressDialog.dismiss();
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
-
 
             try {
                 tmpIn = mmSocket.getInputStream();
@@ -242,7 +241,7 @@ public class BluetoothServiceConnection {
             mmOutStream = tmpOut;
         }
 
-        public void run(){
+        public void run() {
             byte[] buffer = new byte[1024];  // buffer store for the stream
             int bytes; // bytes returned from read()
 
@@ -265,7 +264,7 @@ public class BluetoothServiceConnection {
             }
         }
 
-        //Call this from the main activity to send data to the remote device
+        // Call this from the main activity to send data to the remote device
         public void write(byte[] bytes) {
             String text = new String(bytes, Charset.defaultCharset());
             Log.d(TAG, "write: Writing to outputstream: " + text);
@@ -292,19 +291,14 @@ public class BluetoothServiceConnection {
         mConnectedThread.start();
     }
 
-    /**
-     * Write to the ConnectedThread in an unsynchronized manner
-     *
-     * @param out The bytes to write
-     * @see ConnectedThread#write(byte[])
-     */
+
     public void write(byte[] out) {
         // Create temporary object
         ConnectedThread r;
 
         // Synchronize a copy of the ConnectedThread
         Log.d(TAG, "write: Write Called.");
-        //perform the write
+        // Perform the write
         mConnectedThread.write(out);
     }
 

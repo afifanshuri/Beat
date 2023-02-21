@@ -44,28 +44,27 @@ import java.util.UUID;
 
 public class  RetrieveDevicesApp extends AppCompatActivity {
 
-    BluetoothServiceConnection mBluetoothConnection;
-    private static final UUID MY_UUID_INSECURE =
+    BluetoothServiceConnection mBluetoothConnection; // object for bluetooth connection
+    private static final UUID MY_UUID_INSECURE = // UUID for Bluetooth service
             UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
-    private static final int REQUEST_ENABLE_BT = 0;
-    private static final int REQUEST_DISCOVER_BT= 1;
-    private final int REQUEST_ACCESS_COARSE_LOCATION = 0xb01;
+    private static final int REQUEST_ENABLE_BT = 0; // request code for enabling bluetooth
+    private static final int REQUEST_DISCOVER_BT= 1; // request code for discovering devices
+    private final int REQUEST_ACCESS_COARSE_LOCATION = 0xb01; // request code for accessing coarse location
 
-    TextView founddevices, BTStatus, test;
-    Switch BTState;
-    Button discoverableBTBtn, pairBTBtn;
-    BluetoothAdapter bluetoothadapter;
-    ListView discoveredDevices,bondedDevices;
-    ArrayList<String> retrieveddevices = new ArrayList<String>();
-    ArrayList<BluetoothDevice> retrieveddevicesbluetooth = new ArrayList<BluetoothDevice>();
-    ArrayList<String> paireddevices = new ArrayList<String>();
-    Set<BluetoothDevice> pairedDevices;
-    BluetoothDevice mBTDevice;
-    StringBuilder messages;
-    private String TAG="Afif";
-    int id;
+    TextView founddevices, BTStatus, test; // text views for displaying bluetooth device info and status
+    Switch BTState; // switch for turning on and off bluetooth
+    Button discoverableBTBtn, pairBTBtn; // buttons for discovering and pairing bluetooth devices
+    BluetoothAdapter bluetoothadapter; // bluetooth adapter for communicating with other bluetooth devices
+    ListView discoveredDevices,bondedDevices; // list views for displaying discovered and paired devices
+    ArrayList<String> retrieveddevices = new ArrayList<String>(); // array list for storing discovered device info
+    ArrayList<BluetoothDevice> retrieveddevicesbluetooth = new ArrayList<BluetoothDevice>(); // array list for storing discovered bluetooth devices
+    ArrayList<String> paireddevices = new ArrayList<String>(); // array list for storing paired device info
+    Set<BluetoothDevice> pairedDevices; // set for storing paired bluetooth devices
+    BluetoothDevice mBTDevice; // selected bluetooth device
+    StringBuilder messages; // string builder for displaying received messages
+    private String TAG="Afif"; // tag for debugging
+    int id; // id for tracking device connections
     private Object RetrieveHeartRate;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,97 +72,126 @@ public class  RetrieveDevicesApp extends AppCompatActivity {
         setContentView(R.layout.activity_retrieve_devices_app);
         Intent intent = getIntent();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); // toolbar for displaying app title
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar(); // action bar for displaying back button
         actionBar.setDisplayHomeAsUpEnabled(true);
-        //code below is to avoid app crash because in the parent activity, it asks for intent from the login page
+        // code below is to avoid app crash because in the parent activity, it asks for intent from the login page
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        discoveredDevices=(ListView)findViewById(R.id.retrievedDevicesList);
-        bondedDevices=(ListView)findViewById(R.id.pairedDevicesList);
-        BTState = (Switch)findViewById(R.id.BTStateBtn);
-        discoverableBTBtn=(Button)findViewById(R.id.discBtnBT);
-        pairBTBtn=(Button)findViewById(R.id.pairBtnBT);
-        test = (TextView)findViewById(R.id.pairedDevicesText);
+        discoveredDevices=(ListView)findViewById(R.id.retrievedDevicesList); // list view for displaying discovered devices
+        bondedDevices=(ListView)findViewById(R.id.pairedDevicesList); // list view for displaying paired devices
+        BTState = (Switch)findViewById(R.id.BTStateBtn); // switch for turning on and off bluetooth
+        discoverableBTBtn=(Button)findViewById(R.id.discBtnBT); // button for making device discoverable
+        pairBTBtn=(Button)findViewById(R.id.pairBtnBT); // button for pairing with other devices
+        test = (TextView)findViewById(R.id.pairedDevicesText); // text view for displaying paired device info
 
-        //LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("incomingMessage"));
-        //1) initialize the bluetooth adapter to get started
+        // LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("incomingMessage"));
+
+        // 1) initialize the bluetooth adapter to get started
         bluetoothadapter = BluetoothAdapter.getDefaultAdapter();
 
-        //2) check whether device has a working bluetooth
+        // 2) check whether device has a working bluetooth
         if (bluetoothadapter == null){
-           showToast("Bluetooth is not available");
+            showToast("Bluetooth is not available");
         }
         else
             showToast("Bluetooth is available");
 
+        // set switch for turning on and off bluetooth
         if(bluetoothadapter.isEnabled()) {
             BTState.setChecked(true);
             showToast("Bluetooth is turned on");
         }
 
+
+        // Set an OnCheckedChangeListener to the BTState switch button
         BTState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // do something, the isChecked will be
-                // true if the switch is in the On position
+                // If the switch is turned on
                 if(BTState.isChecked()){
+
                     if(!bluetoothadapter.isEnabled()) {
+
                         showToast("Turning on bluetooth..");
+                        // Create a new intent to enable Bluetooth
                         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        // Start an activity to enable Bluetooth
                         startActivityForResult(intent, REQUEST_ENABLE_BT);
+
                         showToast("Bluetooth is turned on");
                     }
+                    // If the Bluetooth adapter is already enabled
                     else{
-                        showToast("Bluetooth is already turned on!");}
-                }
 
+                        showToast("Bluetooth is already turned on!");
+                    }
+                }
+                // If the switch is turned off
                 else{
+                    // If the Bluetooth adapter is enabled
                     if(bluetoothadapter.isEnabled()){
+
                         showToast("Turning off bluetooth..");
+                        // Disable the Bluetooth adapter
                         bluetoothadapter.disable();
+
                         showToast("Bluetooth is turned off");
+                        // Clear the list of retrieved devices
                         retrieveddevices.clear();
+                        // Set the adapter for the discoveredDevices ListView to display the retrieved devices list
                         discoveredDevices.setAdapter(new ArrayAdapter<String>(
                                 RetrieveDevicesApp.this,
                                 android.R.layout.simple_list_item_1,
                                 retrieveddevices));
                     }
+                    // If the Bluetooth adapter is already disabled
                     else
+
                         showToast("Bluetooth is already turned off");
                 }
             }
         });
 
-        //display lists of paired devices
+        // Get a list of paired devices
         pairedDevices = bluetoothadapter.getBondedDevices();
         // If there are paired devices
         if (pairedDevices.size() > 0) {
-        // Loop through paired devices
+
             for (BluetoothDevice device : pairedDevices) {
-                // Add the name and address to an array adapter to show in a ListView
+                // Add the name and address of each paired device to an array adapter to display in a ListView
                 paireddevices.add(device.getName() + "\n" + device.getAddress());
             }
+            // Set the adapter for the bondedDevices ListView to display the paired devices list
             bondedDevices.setAdapter(new ArrayAdapter<String>(
                     RetrieveDevicesApp.this,
                     android.R.layout.simple_list_item_1,
                     paireddevices));
+            // Create an array list of paired devices
             ArrayList<BluetoothDevice> pairedDevicesArray = new ArrayList<BluetoothDevice>();
+            // Add all paired devices to the array list
             pairedDevicesArray.addAll(pairedDevices);
+            // Set an OnItemClickListener for the bondedDevices ListView
             AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener(){
                 public void onItemClick(AdapterView<?> listView,
                                         View itemView,
                                         int position,
                                         long id) {
+
                     for (int x=0;x<pairedDevicesArray.size();x++) {
+                        // If the selected item in the ListView corresponds to the current device in the array list
                         if(position==x) {
-                            //conenct to the paired device chosen
+                            // Connect to the selected paired device
                             try{
-                            mBTDevice = pairedDevicesArray.get(x);
-                            mBluetoothConnection = new BluetoothServiceConnection((Context) RetrieveHeartRate);
-                            showToast("Paired with "+mBTDevice.getName()+". Click start retrieving button to start monitoring heart rate.");}
+                                // Set the mBTDevice variable to the selected device
+                                mBTDevice = pairedDevicesArray.get(x);
+                                // Create a new BluetoothServiceConnection object
+                                mBluetoothConnection = new BluetoothServiceConnection((Context) RetrieveHeartRate);
+
+                                showToast("Paired with "+mBTDevice.getName()+". Click start retrieving button to start monitoring heart rate.");
+                            }
                             catch (Exception e){
                                 showToast("Cannot connect to "+mBTDevice.getName());
                             }
@@ -238,17 +266,6 @@ public class  RetrieveDevicesApp extends AppCompatActivity {
         });
 
     }
-
-    /**BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String text = intent.getStringExtra("theMessage");
-            showToast(text);
-            //messages.append(text + "\n");
-            //test.setText(messages);
-        }
-    };**/
 
     //method for when a remote device is found from startdiscovery()
     BroadcastReceiver receiver = new BroadcastReceiver() {

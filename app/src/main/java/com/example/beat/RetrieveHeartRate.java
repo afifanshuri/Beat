@@ -39,20 +39,44 @@ import java.util.UUID;
 
 public class RetrieveHeartRate extends AppCompatActivity {
 
+    // Permission request code used for SMS permissions
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 123;
+
+    // Bluetooth device to connect to
     BluetoothDevice mBTDevice;
+
+    // UUID to use for insecure connections
     UUID MY_UUID_INSECURE;
+
+    // Object used to establish a Bluetooth service connection
     BluetoothServiceConnection mBluetoothConnection;
+
+    // Tag used for logging
     private String TAG="RETRIEVE_HEART_RATE_ACTIVITY";
-    int id, age,sex,cp, restecg, slope,ca,thal,fbs,chol,trestbps,exang;
+
+    // Variables used to store user medical information
+    int id, age, sex, cp, restecg, slope, ca, thal, fbs, chol, trestbps, exang;
     double thalach, oldpeak;
+
+    // Textviews used to display heart rate information
     TextView heartresult, heartresult2;
+
+    // Variables used to store current heart rate and emergency contact information
     String currentHeartRate, emergencyContact;
+
+    // Phone number of the emergency contact
     String phone;
+
+    // Intent filter used to monitor Bluetooth device disconnections
     IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+
+    // Boolean used to track if user is okay
     boolean userOK;
+
+    // Object used to run a TensorFlow Lite model
     Interpreter interpreter;
 
+    // Permission request code used for SMS permissions
     private static final int PERMISSION_REQUEST_CODE = 1;
 
     @Override
@@ -61,27 +85,37 @@ public class RetrieveHeartRate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retrieve_heart_rate);
 
+        // Register a local broadcast receiver to listen for incoming messages
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("incomingMessage"));
+
+        // Get the user ID from the previous activity
         id=getIntent().getExtras().getInt("userID",0);
+
+        // Find the TextViews that will be used to display heart rate information
         heartresult=(TextView)findViewById(R.id.heartresult);
         heartresult2=(TextView)findViewById(R.id.heartresult2);
+
+        // Set userOK to true, as the user is initially assumed to be okay
         userOK=true;
 
-        //Permission to send SMS
+        // Check if the app has permission to send SMS messages
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-
             if (checkSelfPermission(Manifest.permission.SEND_SMS)
                     == PackageManager.PERMISSION_DENIED) {
                 Log.d("permission", "permission denied to SEND_SMS - requesting it");
+
+                // Request permission to send SMS messages
                 String[] permissions = {Manifest.permission.SEND_SMS};
                 requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-
             }
         }
 
         try {
+            // Open a connection to the database that stores user medical information
             SQLiteOpenHelper beathelper = new UserMedicalInfo(this);
             SQLiteDatabase db = beathelper.getReadableDatabase();
+
+            // Query the database to get the user's medical information
             Cursor cursor = db.query("USERSMEDICAL",
                     new String[]{"_id", "AGE","SEX","CP","TRESTBPS","CHOL","FBS","RESTECG","THALACH","EXANG","OLDPEAK","SLOPE",
                             "CA","THAL","EMERGENCY_CONTACT"},
@@ -109,7 +143,7 @@ public class RetrieveHeartRate extends AppCompatActivity {
 
         }catch(SQLException e){
             Toast toast = Toast.makeText(this, "Database unavailable @RetrieveHeartRate1", Toast.LENGTH_SHORT);
-            toast.show(); 
+            toast.show();
         }
 
         heartresult.setText("Click 'start retrieving' on the smartwatch app to start monitoring heart rate");
@@ -206,9 +240,14 @@ public class RetrieveHeartRate extends AppCompatActivity {
                      }
 
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(RetrieveHeartRate.this);
+
+                    // set the message for the alert dialog box
                     builder1.setMessage("Abnormality has been detected. Press YES to confirm that you are okay. Press NO or ignore if you need assistance");
+
+                    // allow the user to cancel the dialog box by tapping outside of it
                     builder1.setCancelable(true);
 
+                    // set the action for the "Yes" button
                     builder1.setPositiveButton(
                             "Yes",
                             new DialogInterface.OnClickListener() {
@@ -218,26 +257,29 @@ public class RetrieveHeartRate extends AppCompatActivity {
                                 }
                             });
 
+                    // set the action for the "No" button
                     builder1.setNegativeButton(
                             "No",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    try {
 
+                                    // request permission to send SMS message
+                                    try {
                                         if (ContextCompat.checkSelfPermission(RetrieveHeartRate.this,
                                                 Manifest.permission.SEND_SMS)
                                                 != PackageManager.PERMISSION_GRANTED) {
-                                            //if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+
+                                            // if the user has denied permission before
                                             if (shouldShowRequestPermissionRationale(
                                                     Manifest.permission.SEND_SMS)) {
                                             } else {
-                                                //ActivityCompat.requestPermissions(getActivity(),
+
                                                 requestPermissions(
                                                         new String[]{Manifest.permission.SEND_SMS},
                                                         MY_PERMISSIONS_REQUEST_SEND_SMS);
                                             }
                                         } else {
+                                            // if permission already granted, send SMS message
                                             Log.i("smsB", "Have permission... send the sms now");
                                             SmsManager smsManager = SmsManager.getDefault();
                                             smsManager.sendTextMessage(phone, null, "Abnormality has been detected from this owner's heart rate. Please get assistance immediately.", null, null);
@@ -248,23 +290,36 @@ public class RetrieveHeartRate extends AppCompatActivity {
                                     }catch (Exception e){
                                         Toast.makeText(getApplicationContext(),"Message not Sent",Toast.LENGTH_LONG).show();
                                     }
+
+                                    dialog.cancel();
                                 }
                             });
 
+                    // create the alert dialog box
                     AlertDialog alert11 = builder1.create();
+
+                    // show the alert dialog box to the user
                     alert11.show();
 
                     try {
+                        // update the user's medical information in the database
                         SQLiteOpenHelper beathelper = new UserMedicalInfo(RetrieveHeartRate.this);
                         SQLiteDatabase db = beathelper.getWritableDatabase();
                         ContentValues uservalues = new ContentValues();
+
+                        // set the user's status to "AT RISK"
                         uservalues.put("STATUS","AT RISK");
+
+                        // set the user's recent heart rate value to the current heart rate
                         uservalues.put("RECENTHEARTRATE",currentHeartRate);
+
+                        // update the user's medical information in the database
                         db.update("USERSMEDICAL",
                                 uservalues,
                                 "_id = ?",
                                 new String[] {Integer.toString(id)});
                         db.close();
+
                     }catch(SQLException e){
                         Toast toast = Toast.makeText(RetrieveHeartRate.this, "Database unavailable @RetrieveHeartRate2", Toast.LENGTH_SHORT);
                         toast.show();
@@ -294,17 +349,6 @@ public class RetrieveHeartRate extends AppCompatActivity {
                     }
 
                 }
-
-                // Releases model resources if no longer used.
-                /**model.close();
-
-
-            } catch (IOException e) {
-                // TODO Handle the exception
-            }**/
-
-
-
         }
     };
 
